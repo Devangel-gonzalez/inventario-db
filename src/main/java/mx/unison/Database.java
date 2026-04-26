@@ -140,57 +140,20 @@ public class Database {
         return null;
     }
 
-    public List<Almacen> listAlmacenes() {
-        List<Almacen> out = new ArrayList<>();
-        String sql = "SELECT id, nombre, ubicacion, fecha_hora_creacion, fecha_hora_ultima_modificacion, ultimo_usuario_en_modificar FROM almacenes";
-
-        try (Connection c = connect();
-                PreparedStatement ps = c.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery()) { // (Corregido) ResultSet dentro del try para asegurar cierre
-            while (rs.next()) {
-                Almacen a = new Almacen();
-                a.id = rs.getInt("id");
-                a.nombre = rs.getString("nombre");
-                a.ubicacion = rs.getString("ubicacion");
-                a.fechaHoraCreacion = rs.getString("fecha_hora_creacion");
-                a.fechaHoraUltimaMod = rs.getString("fecha_hora_ultima_modificacion");
-                a.ultimoUsuario = rs.getString("ultimo_usuario_en_modificar");
-                out.add(a);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return out;
+    public List<Almacen> listAlmacenes() throws SQLException {
+        DatabaseHelper dbHelper = new DatabaseHelper();
+        return dbHelper.getAlmacenDao().queryForAll();
     }
 
-    public int insertAlmacen(String nombre, String ubicacion, String usuario) {
-        String sql = """
-                INSERT INTO almacenes(
-                    nombre,
-                    ubicacion,
-                    fecha_hora_creacion,
-                    fecha_hora_ultima_modificacion,
-                    ultimo_usuario_en_modificar
-                ) VALUES(?,?,?,?,?)"""; // (Corregido) SQL para insertar almacén con campos correctos
-
-        try (Connection c = connect();
-                PreparedStatement ps = c.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-            ps.setString(1, nombre);
-            ps.setString(2, ubicacion);
-            ps.setString(3, LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
-            ps.setString(4, LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)); // (Corregido)
-            ps.setString(5, usuario);
-            ps.executeUpdate();
-
-            try (ResultSet g = ps.getGeneratedKeys()) { // (Corregido) ResultSet dentro del try para asegurar cierre
-                if (g.next()) {
-                    return g.getInt(1);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1;
+    public int insertAlmacen(String nombre, String ubicacion, String usuario) throws SQLException {
+        DatabaseHelper dbHelper = new DatabaseHelper();
+        Almacen almacen = new Almacen();
+        almacen.nombre = nombre;
+        almacen.ubicacion = ubicacion;
+        almacen.fechaHoraCreacion = LocalDateTime.now().toString();
+        almacen.fechaHoraUltimaMod = LocalDateTime.now().toString();
+        almacen.ultimoUsuario = usuario;
+        return dbHelper.getAlmacenDao().create(almacen);
     }
 
     public void updateAlmacen(int id, String nombre, String ubicacion, String usuario) {
