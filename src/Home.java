@@ -1,0 +1,51 @@
+package mx.unison;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class Home extends JPanel {
+    public Home(Runnable onOpenProductos, Runnable onOpenAlmacenes) {
+        setLayout(new BorderLayout());
+        setBackground(new Color(245, 245, 245)); // (Corregido) Color de fondo claro
+
+        JPanel center = new JPanel();
+        center.setLayout(new BoxLayout(center, BoxLayout.Y_AXIS));
+        center.setBorder(BorderFactory.createEmptyBorder(40, 40, 40, 40));
+
+        JLabel title = new JLabel("Sistema de Inventario");
+        title.setFont(new Font("Segoe UI", Font.BOLD, 32));
+        title.setForeground(new Color(0, 82, 158)); // (Corregido) Azul Unison #00529e
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Botón Productos // (Corregido) Estilo unison
+        JButton btnProd = createStyledButton("Productos", new Color(0, 82, 158));
+        btnProd.addActionListener(e -> onOpenProductos.run());
+
+        // Botón Almacenes // (Corregido) Estilo unison
+        JButton btnAlm = createStyledButton("Almacenes", new Color(0, 82, 158));
+        btnAlm.addActionListener(e -> onOpenAlmacenes.run());
+
+        center.add(title);
+        center.add(Box.createRigidArea(new Dimension(0, 20)));
+        center.add(btnProd);
+        center.add(Box.createRigidArea(new Dimension(0, 10)));
+        center.add(btnAlm);
+
+        add(center, BorderLayout.CENTER);
+    }
+
+    // Metodo para botones con estilo unison
+    private JButton createStyledButton(String text, Color color) { // (Corregido) Metodo para crear botones
+        JButton btn = new JButton(text);
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        btn.setForeground(new Color(0, 82, 158)); // Azul Unison para el texto
+        btn.setBackground(color);
+        btn.setFocusPainted(false);
+        btn.setPreferredSize(new Dimension(280, 55));
+        btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        btn.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(0, 82, 158), 2),
+                BorderFactory.createEmptyBorder(12, 0, 12, 0)));
+        return btn;
+    }
+}
