@@ -24,5 +24,5 @@ public class Almacen {
     @DatabaseField(columnName = "ultimo_usuario_en_modificar")
     public String ultimoUsuario;
 
-    // easwe
+    // easwj
 }

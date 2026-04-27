@@ -37,7 +37,7 @@ public class DatabaseHelper {
         return usuarioDao;
     }
 
-    public void close() throws SQLException {
+    public void close() throws Exception {
         connectionSource.close();
     }
 }

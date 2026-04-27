@@ -153,6 +153,7 @@ public class Database {
         almacen.fechaHoraCreacion = LocalDateTime.now().toString();
         almacen.fechaHoraUltimaMod = LocalDateTime.now().toString();
         almacen.ultimoUsuario = usuario;
+
         return dbHelper.getAlmacenDao().create(almacen);
     }
 

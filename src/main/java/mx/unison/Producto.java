@@ -23,6 +23,12 @@ public class Producto {
     @DatabaseField(columnName = "almacen_id", foreign = true)
     public Almacen almacen;
 
+    @DatabaseField
+    public int almacenId;
+
+    @DatabaseField
+    public String almacenNombre;
+
     @DatabaseField(columnName = "fecha_hora_creacion")
     public String fechaCreacion;
 
