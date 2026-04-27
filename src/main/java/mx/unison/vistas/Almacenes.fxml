@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="15" xmlns:fx="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+    fx:controller="mx.unison.controladores.AlmacenesController">
+    <Label text="Gestión de Almacenes" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
+    <TableView fx:id="almacenesTable" prefHeight="400" prefWidth="800">
+        <columns>
+            <TableColumn text="ID" fx:id="idColumn"/>
+            <TableColumn text="Nombre" fx:id="nombreColumn"/>
+            <TableColumn text="Ubicación" fx:id="ubicacionColumn"/>
+            <TableColumn text="Creado" fx:id="fechaCreacionColumn"/>
+            <TableColumn text="Última Modificación" fx:id="fechaUltimaModColumn"/>
+            <TableColumn text="Último Usuario" fx:id="ultimoUsuarioColumn"/>
+        </columns>
+    </TableView>
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Agregar" onAction="#handleAdd"/>
+        <Button text="Modificar" onAction="#handleEdit"/>
+        <Button text="Eliminar" onAction="#handleDelete"/>
+        <Button text="Regresar" onAction="#handleGoBack"/>
+    </HBox>
+</VBox>
